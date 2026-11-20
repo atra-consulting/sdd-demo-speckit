@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_search' %}
+
+{% block main %}
+    {#
+        Render a component using its HTML-like syntax
+        See https://symfony.com/bundles/ux-twig-component/current/index.html#component-html-syntax
+    #}
+    <twig:BlogSearch query="{{ query }}" />
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+    {{ show_source_code(_self) }}
+{% endblock %}
