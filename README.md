@@ -89,7 +89,7 @@ Die Aufgabe: Jede Blog-Seite zeigt eine geschätzte Lesezeit an.
 
 Der volle Ablauf: Grundsätze, Spezifikation, Klärung, Plan, Checkliste, Aufgaben, Analyse, Umsetzung, Nachziehen. Klärung, Checkliste, Analyse und Nachziehen kannst du überspringen.
 
-**Warum neue Sitzungen?** So arbeitet die Fabrik am zweiten Tag: Jeder Schritt ist ein eigener Lauf, der bei null beginnt. Dazwischen prüft ein Mensch das Ergebnis und gibt es frei. Die neue Sitzung zeigt das im Kleinen. Du prüfst und committest, und der nächste Schritt findet den Stand allein in den Dateien im Repo, ohne Gedächtnis der letzten Sitzung.
+Alles läuft in **einer** Copilot-Sitzung, Schritt für Schritt. Spec Kit hat keine eingebaute Freigabe. Zwischen den Schritten prüfst du das Ergebnis und committest im zweiten Terminal.
 
 Öffne ein **zweites Terminal** im selben Ordner. Dort schaust du nach, was Copilot geschrieben hat.
 
@@ -101,11 +101,9 @@ Der volle Ablauf: Grundsätze, Spezifikation, Klärung, Plan, Checkliste, Aufgab
 /speckit-constitution Use the existing Symfony, Doctrine, Twig and PHPUnit stack. No new dependencies. Every change comes with PHPUnit tests. Run the tests with exactly: ./bin/phpunit
 ```
 
-Prüfen, `/exit`, committen.
+Prüfen und committen: `git add -A && git commit -m "Lesezeit: Grundsätze"`.
 
 ### 2. Spezifikation
-
-Starte Copilot neu und vertrau dem Ordner wieder mit `1. Yes`. Dann:
 
 ```text
 /speckit-specify Show an estimated reading time on each blog post page, based on 200 words per minute, rounded up to whole minutes. Add unit tests.
@@ -123,17 +121,13 @@ Starte Copilot neu und vertrau dem Ordner wieder mit `1. Yes`. Dann:
 
 `/speckit-clarify` sucht laut Spec Kit unklare Stellen in der Spezifikation. Es stellt dir bis zu 5 gezielte Fragen und schreibt die Antworten in `spec.md`. Ein guter Kandidat: Was zeigt ein leerer Beitrag? Im Vortest wählten zwei Läufe dafür verschiedene Antworten.
 
-In derselben Sitzung:
-
 ```text
 /speckit-clarify
 ```
 
-Dann `/exit` und `git add -A && git commit -m "Lesezeit: Spezifikation"`.
+Dann committen: `git add -A && git commit -m "Lesezeit: Spezifikation"`.
 
 ### 4. Plan
-
-Neue Sitzung, Ordner vertrauen, dann:
 
 ```text
 /speckit-plan Use the existing Symfony, Doctrine, Twig and PHPUnit stack of this repository. No new dependencies.
@@ -148,17 +142,15 @@ Neue Sitzung, Ordner vertrauen, dann:
 
 ### 5. Checkliste
 
-`/speckit-checklist` erzeugt laut Spec Kit eine eigene Checkliste für das Feature, nach deinen Vorgaben. In derselben Sitzung, zum Beispiel:
+`/speckit-checklist` erzeugt laut Spec Kit eine eigene Checkliste für das Feature, nach deinen Vorgaben. Zum Beispiel:
 
 ```text
 /speckit-checklist Accessibility and translations of the new label
 ```
 
-Dann `/exit` und committen.
+Dann committen.
 
 ### 6. Aufgaben
-
-Neue Sitzung, dann:
 
 ```text
 /speckit-tasks
@@ -168,13 +160,13 @@ Spec Kit schreibt `tasks.md`: Aufgaben in der Reihenfolge ihrer Abhängigkeiten.
 
 ### 7. Analysieren
 
-`/speckit-analyze` prüft laut Spec Kit, ob `spec.md`, `plan.md` und `tasks.md` zueinander passen. Es ändert nichts. In derselben Sitzung:
+`/speckit-analyze` prüft laut Spec Kit, ob `spec.md`, `plan.md` und `tasks.md` zueinander passen. Es ändert nichts.
 
 ```text
 /speckit-analyze
 ```
 
-Dann `/exit` und committen.
+Dann committen.
 
 ### 8. Umsetzen
 
@@ -184,7 +176,7 @@ Ab jetzt schreibt Copilot Code und lässt Tests laufen. Nenn ihm den Testbefehl 
 Factory rules: edit files with your file tools, not with shell scripts. Run the tests with exactly: ./bin/phpunit
 ```
 
-Neue Sitzung, dann:
+Also:
 
 ```text
 /speckit-implement
@@ -201,19 +193,19 @@ Factory rules: edit files with your file tools, not with shell scripts. Run the 
 
 ### 9. Nachziehen
 
-`/speckit-converge` vergleicht laut Spec Kit den Code mit Spezifikation, Plan und Aufgaben. Was noch fehlt, hängt es als neue Aufgaben an `tasks.md` an. Danach erledigt `/speckit-implement` den Rest. In derselben Sitzung:
+`/speckit-converge` vergleicht laut Spec Kit den Code mit Spezifikation, Plan und Aufgaben. Was noch fehlt, hängt es als neue Aufgaben an `tasks.md` an. Danach erledigt `/speckit-implement` den Rest.
 
 ```text
 /speckit-converge
 ```
 
-Dann `/exit` und committen.
+Dann committen.
 
 ## Runde 2: Bug „Doppelte Tags“
 
 Die Aufgabe: Tags, die sich nur in Groß- und Kleinschreibung unterscheiden, entstehen doppelt.
 
-Spec Kits kurzer Weg für Bugs ist die Bug-Erweiterung. Sie braucht weder Spezifikation noch Plan, und alles läuft in **einer** Sitzung. Starte Copilot neu, dann:
+Spec Kits kurzer Weg für Bugs ist die Bug-Erweiterung. Sie braucht weder Spezifikation noch Plan:
 
 ```text
 /speckit-bug-assess "Tag names that differ only in upper and lower case create duplicate tags. Normalize tag names to lowercase when saving. Add a regression test." slug=tag-case
@@ -293,15 +285,14 @@ TICKET>>>
 
 Die Werte stammen aus Vortests mit denselben Versionen. Bei dir können sie abweichen. Copilot Pro bietet 1.500 AI Credits im Monat. Den Verbrauch siehst du unten rechts in Copilot und nach `/exit`.
 
-## Was in allen Vortests galt
+## Die Fabrik am zweiten Tag
 
-- **Spec Kit hat keine eingebaute Freigabe.** Prüfen ist deine Aufgabe zwischen den Schritten.
-- **Den Stand findet Copilot in den Dateien im Repo.** Bei Spec Kit gehört dazu `.specify/feature.json`, und die ignoriert git.
-- **Copilot fragt interaktiv vor jedem Schreiben.** Unbeaufsichtigt fragt es nicht, sondern lehnt ab. Den unbeaufsichtigten Betrieb zeigt ein optionaler Teil am zweiten Tag, mit eigener Anleitung.
+Die Fabrik nimmt Spec Kit, wenn das Jira-Ticket das Label `sdd-speckit` hat. Sie macht dieselben Schritte wie du hier, mit zwei Unterschieden:
 
-## Tag 2: die Fabrik
+- **Copilot fragt nicht.** Eine Liste freigegebener Werkzeuge ersetzt deine „Yes“-Antworten. Was nicht auf der Liste steht, lehnt Copilot ab, ohne zu fragen. Der Prozess endet trotzdem mit Exit-Code 0. Bei Spec Kit stehen dort seine fünf Skripte in `.specify/scripts/bash/`, beim Umsetzen dazu `./bin/phpunit`.
+- **Neue Sitzungen an zwei Stellen.** Die Fabrik arbeitet in zwei Läufen: erst die Spezifikation, dann die Umsetzung. Dazwischen prüft ein Mensch die Spezifikation und gibt sie in Jira frei. Jeder Lauf beginnt mit einer neuen Copilot-Sitzung. Den Stand findet er nur in den Dateien im Repo. Im Spezifikations-Lauf ruft die Fabrik `specify`, `plan` und `tasks` je in einem eigenen Copilot-Aufruf auf. Die Datei `.specify/feature.json` fehlt im frischen Klon, weil git sie ignoriert. Die Fabrik nennt den Feature-Ordner deshalb in `SPECIFY_FEATURE_DIRECTORY`.
 
-Die Fabrik nimmt Spec Kit, wenn das Jira-Ticket das Label `sdd-speckit` hat.
+Hier, lokal, ist alles ein durchgehender Ablauf in einer Sitzung. Den unbeaufsichtigten Betrieb zeigt ein optionaler Teil am zweiten Tag, mit eigener Anleitung.
 
 ## Lizenzen
 
