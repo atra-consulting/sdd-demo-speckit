@@ -33,6 +33,7 @@ Was Spec Kit von den anderen beiden unterscheidet:
 - **OpenSpec** führt eine Gesamtspezifikation der App. Spec Kit nicht: Jedes Feature bekommt einen eigenen nummerierten Ordner. Spec Kit hat mehr Phasen, etwa eigene zum Klären und Analysieren.
 - **BMad** plant auch das Produkt, mit PRD, Epics und Sprints, und gibt seinen Agenten Rollen. Spec Kit beginnt bei der Spezifikation eines Features.
 - **Kosten im Vortest**, Fabrik, ein Ticket: OpenSpec 30–50 AI Credits, Spec Kit etwa 76, BMad etwa 89.
+- **Kosten im Test**, interaktiv, beide Tickets dieser README mit allen optionalen Schritten: Spec Kit 125 AI Credits, OpenSpec 173 (davon 14 fürs Erkunden in einer eigenen Sitzung), BMad 207.
 
 Spec Kit hat keine eingebaute Freigabe. Nach jeder Phase prüfst du selbst.
 
@@ -83,17 +84,21 @@ Du arbeitest und committest nur lokal. Pushen kannst du in dieses Repo nicht.
 copilot --model claude-sonnet-5.5
 ```
 
-- Bei **„Confirm folder trust“** wählst du `1. Yes`.
+- Bei jedem Start fragt Copilot zuerst **„Confirm folder trust“**. Wähle `1. Yes` und warte auf die leere Eingabezeile `❯`. Was du vorher tippst, geht verloren.
+- Die Warnung „Connected Connectors could not be loaded“ ist harmlos.
 - Unten rechts steht **„Claude Sonnet 5.5“**. Bist du nicht angemeldet, gib `/login` ein.
-- Copilot fragt vor jeder Dateiänderung und vor jedem Befehl, der nicht nur liest. Lies kurz und wähle `1. Yes`.
+- Vor jeder Dateiänderung und vor jedem Befehl, der nicht nur liest, fragt Copilot „Do you want to …?“. Lies kurz und wähle `1. Yes`. Die Option `2. Yes, and don't ask again` spart Klicks. Nimm sie trotzdem nicht. Nur so siehst du jeden Schritt, den Copilot macht.
+- Braucht Copilot eine Entscheidung von dir, erscheint **„Copilot needs information“** mit Optionen. Die erste empfiehlt Copilot. Die Pfeiltasten wählen, `Enter` schickt ab.
 
 Öffne ein **zweites Terminal** im selben Ordner. Nach jedem Schritt, der Dateien schreibt, prüfst du dort das Ergebnis und committest: `git add -A && git commit -m "<Schritt>"`.
 
-Alles läuft in **einer** Copilot-Sitzung. Copilot antwortet nie zweimal gleich. „Was du sehen solltest“ beschreibt die Art der Ausgabe, nicht den Wortlaut.
+Jedes Ticket bekommt eine **eigene** Copilot-Sitzung. Am Ende einer Runde gibst du `/exit` ein. Copilot zeigt dann, was die Sitzung verbraucht hat: AI Credits, Dauer und Tokens. Für die nächste Runde startest du Copilot neu.
+
+Am Ende vieler Schritte schlägt Copilot einen nächsten vor, oft einen optionalen. Folge trotzdem dieser README. Copilot antwortet nie zweimal gleich. „Was du sehen solltest“ beschreibt die Art der Ausgabe, nicht den Wortlaut.
 
 ## Einmalig: Projektregeln festlegen
 
-Das machst du einmal pro Repo, vor dem ersten Feature. Spec Kit nennt die Regeln „Constitution“. Alle Phasen lesen sie. Noch ist `.specify/memory/constitution.md` eine unausgefüllte Vorlage.
+Das machst du einmal pro Repo, in der ersten Sitzung vor Runde 1. Spec Kit nennt die Regeln „Constitution“. Alle Phasen lesen sie. Noch ist `.specify/memory/constitution.md` eine unausgefüllte Vorlage.
 
 ```text
 /speckit-constitution Use the existing Symfony, Doctrine, Twig and PHPUnit stack. No new dependencies. Every change comes with PHPUnit tests. Run the tests with exactly: ./bin/phpunit
@@ -111,7 +116,7 @@ Die Aufgabe: Jede Blog-Seite zeigt eine geschätzte Lesezeit an. Du gehst durch 
 /speckit-specify Show an estimated reading time on each blog post page, based on 200 words per minute, rounded up to whole minutes. Add unit tests.
 ```
 
-**Was du sehen solltest (etwa 1 Minute):**
+**Was du sehen solltest (1–2,5 Minuten):**
 
 - Rückfragen zu `mkdir -p specs/001-…` und zu neuen Dateien.
 - `specs/001-<name>/spec.md` mit User Stories, Anforderungen und Grenzfällen, dazu `checklists/requirements.md`.
@@ -123,7 +128,7 @@ Die Aufgabe: Jede Blog-Seite zeigt eine geschätzte Lesezeit an. Du gehst durch 
 /speckit-clarify
 ```
 
-Spec Kit stellt dir Fragen zu unklaren Stellen, oft mit Antwortoptionen. Antworte mit der Option oder in eigenen Worten. Ein guter Kandidat: Was zeigt ein leerer Beitrag?
+Spec Kit stellt dir eine bis fünf Fragen zu unklaren Stellen, oft mit Antwortoptionen. Antworte mit der Option oder in eigenen Worten. Ein guter Kandidat: Was zeigt ein leerer Beitrag? Im Test kam eine Frage: Welcher Text zählt als Wort?
 
 ### 3. Plan
 
@@ -131,7 +136,7 @@ Spec Kit stellt dir Fragen zu unklaren Stellen, oft mit Antwortoptionen. Antwort
 /speckit-plan Use the existing Symfony, Doctrine, Twig and PHPUnit stack of this repository. No new dependencies.
 ```
 
-**Was du sehen solltest (1–2 Minuten):** neben `spec.md` die Dateien `plan.md`, `research.md`, `data-model.md`, `quickstart.md` und `contracts/`. Noch kein Code.
+**Was du sehen solltest (1–2 Minuten):** neben `spec.md` die Dateien `plan.md`, `research.md`, `data-model.md` und `quickstart.md`. `contracts/` legt Spec Kit nur an, wenn das Feature neue Routen oder Schnittstellen bringt. Für die Lesezeit fehlte es im Test. Noch kein Code.
 
 ### 4. Checkliste (optional)
 
@@ -139,7 +144,9 @@ Spec Kit stellt dir Fragen zu unklaren Stellen, oft mit Antwortoptionen. Antwort
 /speckit-checklist Accessibility and translations of the new label
 ```
 
-**Was du sehen solltest:** eine neue Datei in `checklists/` mit Prüfpunkten zu deinem Thema.
+**Was du sehen solltest:** eine neue Datei in `checklists/` mit Prüfpunkten zu deinem Thema. Die Punkte prüfen die Spezifikation, nicht den Code. Lücken klärst du mit `/speckit-clarify`.
+
+Legst du eine Checkliste an, prüft jedes spätere `/speckit-implement` sie zuerst. Sind Punkte offen, fragt Copilot „Proceed anyway?“. Wähle `Yes`.
 
 ### 5. Aufgaben
 
@@ -155,7 +162,7 @@ Spec Kit stellt dir Fragen zu unklaren Stellen, oft mit Antwortoptionen. Antwort
 /speckit-analyze
 ```
 
-Der Bericht zeigt Lücken und Widersprüche zwischen Spezifikation, Plan und Aufgaben. Spec Kit ändert dabei nichts.
+Der Bericht zeigt Lücken und Widersprüche zwischen Spezifikation, Plan und Aufgaben. Spec Kit ändert dabei nichts. Am Ende fragt Copilot, ob es Korrekturen vorschlagen soll. Du musst nicht antworten und kannst mit dem nächsten Schritt weitermachen.
 
 ### 7. Umsetzen
 
@@ -166,7 +173,7 @@ Ab jetzt schreibt Copilot Code und startet Tests. Hänge an jeden Umsetzungs-Pro
 Factory rules: edit files with your file tools, not with shell scripts. Run the tests with exactly: ./bin/phpunit
 ```
 
-**Was du sehen solltest:** Copilot arbeitet `tasks.md` ab und hakt die Aufgaben ab. Am Ende laufen die Tests grün. Im Vortest erledigte es 12 von 13 Aufgaben, mit 69 grünen Tests.
+**Was du sehen solltest (etwa 5 Minuten):** Copilot arbeitet `tasks.md` ab und hakt die Aufgaben ab. Am Ende laufen die Tests grün. In zwei Testläufen erledigte es 12 von 13 und 8 von 8 Aufgaben, mit 69 und 64 grünen Tests.
 
 Prüfen: `./bin/phpunit` und `git status --short`.
 
@@ -176,32 +183,36 @@ Prüfen: `./bin/phpunit` und `git status --short`.
 /speckit-converge
 ```
 
-Spec Kit vergleicht den Code mit Spezifikation, Plan und Aufgaben. Fehlt etwas, hängt es neue Aufgaben an `tasks.md` an. Die erledigt ein weiteres `/speckit-implement`.
+Spec Kit vergleicht den Code mit Spezifikation, Plan und Aufgaben. Fehlt etwas, hängt es neue Aufgaben an `tasks.md` an. Die erledigt ein weiteres `/speckit-implement`. Im Test fand Spec Kit eine Lücke: Markdown-Zeichen wie `##` zählten als Wörter.
+
+Runde 1 ist fertig. Gib `/exit` ein und lies die Zusammenfassung.
 
 ## Runde 2: Bug „Doppelte Tags“ (der kurze Weg)
 
 Die Aufgabe: Tags, die sich nur in Groß- und Kleinschreibung unterscheiden, entstehen doppelt.
 
-Für Bugs nimmst du die Bug-Erweiterung. Sie braucht weder Spezifikation noch Plan. Drei Schritte:
+Starte Copilot neu, mit `copilot --model claude-sonnet-5.5`. Für Bugs nimmst du die Bug-Erweiterung. Sie braucht weder Spezifikation noch Plan. Drei Schritte:
 
 ```text
 /speckit-bug-assess "Tag names that differ only in upper and lower case create duplicate tags. Normalize tag names to lowercase when saving. Add a regression test." slug=tag-case
 ```
 
-**Was du sehen solltest:** `.specify/bugs/tag-case/assessment.md` mit der Ursache in `TagArrayToStringTransformer` und einem Lösungsvorschlag. Noch kein Code.
+**Was du sehen solltest:** `.specify/bugs/tag-case/assessment.md` mit der Ursache in `TagArrayToStringTransformer` und einem Lösungsvorschlag. Noch kein Code. Fragt Copilot, ob es auch bestehende Tags mit Großbuchstaben ändern soll, antworte `only new input`.
 
 ```text
 /speckit-bug-fix slug=tag-case
 Factory rules: edit files with your file tools, not with shell scripts. Run the tests with exactly: ./bin/phpunit
 ```
 
-**Was du sehen solltest:** Änderungen an `src/Form/DataTransformer/TagArrayToStringTransformer.php`, meist auch an `src/Entity/Tag.php`, dazu neue Tests. Die Tests laufen grün. Spec Kit schreibt `.specify/bugs/tag-case/fix.md`.
+**Was du sehen solltest:** Änderungen an `src/Form/DataTransformer/TagArrayToStringTransformer.php`, manchmal auch an `src/Entity/Tag.php`, dazu neue Tests. Die Tests laufen grün. Spec Kit schreibt `.specify/bugs/tag-case/fix.md`.
 
 ```text
 /speckit-bug-test slug=tag-case
 ```
 
-**Was du sehen solltest:** `.specify/bugs/tag-case/test.md` mit einem Urteil. Nur bei `verified` ist der Bug weg.
+**Was du sehen solltest:** `.specify/bugs/tag-case/test.md` mit einem Urteil. Nur bei `verified` ist der Bug weg. Meldet Spec Kit, dass PHPStan nicht lief, ist das hier in Ordnung. So war es auch im Test.
+
+Runde 2 ist fertig. Gib `/exit` ein.
 
 ## Mit einem echten Jira-Ticket
 
@@ -220,12 +231,16 @@ TICKET>>>
 
 | Was | Dauer | AI Credits |
 |---|---|---|
-| Interaktiv: Lesezeit spezifizieren und planen, Tag-Bug bewerten und beheben | 15–20 Minuten | etwa 70 |
-| Interaktiv, zusätzlich: Lesezeit `/speckit-tasks` und `/speckit-implement` | – | etwa 50 |
-| Nur `/speckit-bug-assess` zum Tag-Bug | 31 s | 13,9 |
+| Projektregeln: `/speckit-constitution` | 2 Minuten | 13,5 |
+| Runde 1, Pflicht: Spezifikation, Plan, Aufgaben, Umsetzen | etwa 10 Minuten | 43,6 |
+| Runde 1, optional: Klären, Checkliste, Analysieren, Nachziehen mit zweitem Umsetzen | etwa 7 Minuten | 33,9 |
+| Runde 2: `bug-assess`, `bug-fix`, `bug-test` | etwa 5,5 Minuten | 33,6 |
+| **Alles zusammen** | **27 Minuten laut `/exit`, mit Pausen** | **124,7** |
 | Fabrik, unbeaufsichtigt, ein Ticket: Spezifikation, Plan und Aufgaben, dann Umsetzung | 147 s plus 158 s | etwa 76 |
 
-Die Vortests liefen im November 2026 mit denselben Versionen. Bei dir können die Werte abweichen. Copilot Pro bietet 1.500 AI Credits im Monat. Deinen Verbrauch zeigt Copilot unten rechts und nach `/exit`.
+Die Runden stammen aus einem Test am 21. November 2026 mit Copilot CLI 1.0.114. Ein Skript beantwortete die Rückfragen, jeweils nach bis zu 15 Sekunden. Beide Runden liefen in einer Sitzung, spätere Schritte lasen also den ganzen Verlauf mit. Mit einer Sitzung pro Ticket liest Runde 2 den Verlauf von Runde 1 nicht mit. Am teuersten war das erste Umsetzen mit 18,2 AI Credits.
+
+Die Fabrikwerte stammen aus Vortests im November 2026 mit denselben Versionen der Frameworks. Bei dir können die Werte abweichen. Copilot Pro bietet 1.500 AI Credits im Monat. Deinen Verbrauch zeigt Copilot unten rechts als „Session: … AIC used“ und nach `/exit`.
 
 ## Über dieses Repo
 
@@ -240,7 +255,7 @@ Spec Kit hat `.github/skills/speckit-*` (12 Skills) und `.specify/` (Vorlagen, S
 
 Lizenzen: Symfony-Demo MIT, siehe [`LICENSE`](LICENSE). Spec Kit ([github/spec-kit](https://github.com/github/spec-kit)) MIT.
 
-Stand: 20. November 2026. Wir haben mit Copilot CLI 1.0.112 und `claude-sonnet-5.5` getestet.
+Stand: 21. November 2026. Wir haben mit Copilot CLI 1.0.112 und 1.0.114 und `claude-sonnet-5.5` getestet.
 
 ## Die Fabrik am zweiten Tag
 
@@ -249,4 +264,4 @@ Die Fabrik nimmt Spec Kit, wenn das Jira-Ticket das Label `sdd-speckit` hat. Sie
 - **Copilot fragt nicht.** Eine Liste freigegebener Werkzeuge ersetzt dein „Yes“. Alles andere lehnt Copilot ohne Rückfrage ab. Der Lauf endet trotzdem mit Exit-Code 0.
 - **Neue Sitzungen an zwei Stellen.** Die Fabrik arbeitet in zwei Läufen: erst Spezifikation, Plan und Aufgaben, dann die Umsetzung. Dazwischen gibt ein Mensch in Jira frei. Jeder Lauf startet eine neue Copilot-Sitzung und findet den Stand nur in den Dateien im Repo.
 
-Lokal ist alles ein durchgehender Ablauf in einer Sitzung.
+Lokal läuft jedes Ticket in einer Sitzung, von der Spezifikation bis zum Code.
