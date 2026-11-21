@@ -203,14 +203,6 @@ Factory rules: edit files with your file tools, not with shell scripts. Run the 
 
 **Was du sehen solltest:** `.specify/bugs/tag-case/test.md` mit einem Urteil. Nur bei `verified` ist der Bug weg.
 
-## Runde 3: Feature „Beiträge pro Tag“ (falls noch Zeit ist)
-
-```text
-Show the number of published posts next to each tag name in the tag badges, for example "symfony (12)". Count all published posts with that tag, not only the ones on the current page. Add tests.
-```
-
-Geh den Ablauf aus Runde 1 noch einmal. Probier die Phasen, die du übersprungen hast. Spec Kit zählt die Nummer hoch: `specs/002-…`.
-
 ## Mit einem echten Jira-Ticket
 
 Ein Jira-Ticket ist Text von außen. Für das Modell soll es **Daten** sein, keine Anweisung. So rahmt auch die Fabrik am zweiten Tag jedes Ticket ein: Befehl in die erste Zeile, Block darunter, alles zusammen in Copilot einfügen.
