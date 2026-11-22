@@ -1,6 +1,6 @@
 # sdd-demo-speckit: Symfony-Demo mit Spec Kit
 
-Dieses Repo ist die [Symfony-Demo](https://github.com/symfony/demo), ein kleiner Blog mit PHP 8.4, Symfony, Doctrine, Twig, SQLite und 53 PHPUnit-Tests. Dazu liegt **GitHubs Spec Kit 1.4.0** im Repo, für die **GitHub Copilot CLI** und mit der Bug-Erweiterung. Du klonst, startest `copilot` und legst los.
+Dieses Repo ist die [Symfony-Demo](https://github.com/symfony/demo), ein kleiner Blog mit PHP 8.4, Symfony, Doctrine, Twig, SQLite und 53 PHPUnit-Tests. Dazu liegt **GitHubs Spec Kit 1.4.0** im Repo, für die **GitHub Copilot CLI** und mit der Bug-Erweiterung. Du klonst, startest `copilot`, legst einmal die Projektregeln fest und legst los.
 
 Es gibt drei solche Repos, eins pro Framework:
 
