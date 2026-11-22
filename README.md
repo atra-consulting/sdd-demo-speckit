@@ -98,7 +98,7 @@ Am Ende vieler Schritte schlägt Copilot einen nächsten vor, oft einen optional
 
 ## Einmalig: Projektregeln festlegen
 
-Das machst du einmal pro Repo, in der ersten Sitzung vor Runde 1. Spec Kit nennt die Regeln „Constitution“. Alle Phasen lesen sie. Noch ist `.specify/memory/constitution.md` eine unausgefüllte Vorlage.
+Das machst du einmal pro Repo, in der ersten Sitzung vor Runde 1. Spec Kit selbst liegt schon im Repo, siehe „So haben wir Spec Kit installiert“. Spec Kit nennt die Regeln „Constitution“. Alle Phasen lesen sie. Noch ist `.specify/memory/constitution.md` eine unausgefüllte Vorlage.
 
 ```text
 /speckit-constitution Nutze den vorhandenen Stack aus Symfony, Doctrine, Twig und PHPUnit. Keine neuen Abhängigkeiten. Jede Änderung bringt PHPUnit-Tests mit. Starte die Tests immer genau so: ./bin/phpunit
@@ -242,6 +242,23 @@ Die Runden stammen aus einem Test am 21. November 2026 mit Copilot CLI 1.0.114. 
 
 Die Fabrikwerte stammen aus Vortests im November 2026 mit denselben Versionen der Frameworks. Bei dir können die Werte abweichen. Copilot Pro bietet 1.500 AI Credits im Monat. Deinen Verbrauch zeigt Copilot unten rechts als „Session: … AIC used“ und nach `/exit`.
 
+## So haben wir Spec Kit installiert
+
+Spec Kit liegt schon in diesem Repo. Für ein eigenes Repo gehst du so vor wie wir. Du brauchst dafür [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv tool install specify-cli --from "git+https://github.com/github/spec-kit.git@v1.4.0"
+cd <dein-repo>
+specify init --here --force --non-interactive --integration copilot --script sh
+specify extension add bug
+```
+
+- `uv tool install` installiert die Spec-Kit-CLI `specify` in Version 1.4.0.
+- `specify init --here` installiert Spec Kit in den aktuellen Ordner. `--force` erlaubt einen Ordner, in dem schon Dateien liegen. `--integration copilot` richtet die Skills für die Copilot CLI ein, `--script sh` die bash-Skripte.
+- `specify extension add bug` fügt die Bug-Erweiterung hinzu, hier Version 1.0.2.
+
+Danach ist `.specify/memory/constitution.md` noch eine unausgefüllte Vorlage. Die Projektregeln legst du einmal selbst fest, wie in „Einmalig: Projektregeln festlegen“.
+
 ## Über dieses Repo
 
 | Commit | Was |
@@ -251,7 +268,7 @@ Die Fabrikwerte stammen aus Vortests im November 2026 mit denselben Versionen de
 | 3 | Spec Kit 1.4.0 mit `specify init --integration copilot --script sh` und `specify extension add bug` (Erweiterung `bug` 1.0.2) |
 | 4 | Diese README |
 
-Spec Kit hat `.github/skills/speckit-*` (12 Skills) und `.specify/` (Vorlagen, Skripte, Erweiterung, Regeln) angelegt. Die Spec-Kit-CLI `specify` brauchst du nicht.
+Spec Kit hat `.github/skills/speckit-*` (12 Skills) und `.specify/` (Vorlagen, Skripte, Erweiterung, Regeln) angelegt. Zum Arbeiten in diesem Repo brauchst du die Spec-Kit-CLI `specify` nicht.
 
 Lizenzen: Symfony-Demo MIT, siehe [`LICENSE`](LICENSE). Spec Kit ([github/spec-kit](https://github.com/github/spec-kit)) MIT.
 
